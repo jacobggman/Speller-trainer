@@ -17,7 +17,7 @@ app.use(morgan('tiny'))
 
 app.get('*', (req, res) => {
     const data = {
-        isTest: true
+        isTest: false
     };
     res.json(data)
 }
