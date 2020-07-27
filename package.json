@@ -1,5 +1,5 @@
 {
-  "name": "Speller-trainer",
+  "name": "speller-trainer",
   "version": "1.0.0",
   "description": "React and Node app that improves your spelling errors",
   "main": "index.js",
