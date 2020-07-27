@@ -1,12 +1,12 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+const authRoute = require('./routes/auth');
 
 const app = express();
 const PORT = process.env.PORT || 8200;
 
 const uri = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017';
-
 mongoose
     .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('connect to MongoDB'))
@@ -14,6 +14,10 @@ mongoose
 
 
 app.use(morgan('tiny'))
+
+app.use(express.json());
+
+app.use('/api/user', authRoute);
 
 app.get('*', (req, res) => {
     const data = {
