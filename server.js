@@ -26,13 +26,4 @@ if (process.env.NODE_ENV === 'production') {
     app.use(express.static('client/build'));
 }
 
-app.get('*', (req, res) => {
-    const data = {
-        isTest: false
-    };
-    res.json(data)
-}
-)
-
-
 app.listen(PORT, console.log(`server is starting at port ${PORT}`));
