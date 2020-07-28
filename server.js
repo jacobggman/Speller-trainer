@@ -19,6 +19,10 @@ app.use(express.json());
 
 app.use('/api/user', authRoute);
 
+if (process.env.NODE_ENV === 'production') {
+    app.use(express.static('client/build'));
+}
+
 app.get('*', (req, res) => {
     const data = {
         isTest: false
@@ -27,8 +31,5 @@ app.get('*', (req, res) => {
 }
 )
 
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static('client/build'));
-}
 
 app.listen(PORT, console.log(`server is starting at port ${PORT}`));
