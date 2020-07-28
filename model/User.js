@@ -35,13 +35,31 @@ const userSchema = new mongoose.Schema({
         default: Date.now
     },
 
+    BiggestKnowWord: {
+        type: Number,
+        default: -1,
+    },
+
+    lastAsk: {
+        type: Number,
+        default: -1,
+    },
+
+    lastAnswer: {
+        type: Number,
+        default: -1,
+    },
+
     knowWords: {  // the words indexes that the user know for sure (x right answers in a row)
-        type: [Number]
+        type: Map,
+        of: Boolean,
+        default: {},
     },
 
     answers: {  // index to answers
         type: Map,
         of: [answerSchema],
+        default: {},
     },
 })
 
