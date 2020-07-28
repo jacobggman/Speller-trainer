@@ -1,8 +1,0 @@
-POST http://localhost:8200/api/user/register
-
-Content-Type: application/json
-{
-    "name": "jacob",
-    "email": "jacob@fasfas.csd",
-    "password": "jacob@fasfas.csd",
-}
