@@ -1,6 +1,9 @@
 const express = require('express');
 const morgan = require('morgan');
 const mongoose = require('mongoose');
+
+require('dotenv').config();
+
 const authRoute = require('./routes/auth');
 
 const app = express();
