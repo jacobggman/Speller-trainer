@@ -17,6 +17,7 @@ function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     // pow for more small numbers
+    // use pow only when ask for unknon word
     return Math.floor(Math.pow(Math.random(), 2) * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
 
