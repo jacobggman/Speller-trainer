@@ -1,26 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import * as yup from "yup";
+import { Formik, Form, Field } from "formik";
+import { TextFormField } from "./FormFields/TextField";
+import { EmailPass } from "./FormFields/EmaiPassl";
+import { Username } from "./FormFields/Username";
 
-function App() {
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div style={{ textAlign: "center" }}>
+      <div style={{ width: 300, margin: "auto" }}>
+        <Username></Username>
+        <EmailPass></EmailPass>
+      </div>
+    </div >
   );
-}
+};
 
 export default App;
