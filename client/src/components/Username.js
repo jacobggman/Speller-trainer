@@ -1,7 +1,7 @@
 import { Formik, Form, Field } from "formik";
 import * as yup from "yup";
 import React from "react";
-import { TextFormField } from "./TextField";
+import { TextFormField } from "components/TextField";
 
 const schema = yup.object({
     username: yup
