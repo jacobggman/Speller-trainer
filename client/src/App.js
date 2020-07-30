@@ -1,14 +1,11 @@
 import React from "react";
-import { EmailPass } from "components/EmailPassl";
-import { Username } from "components/Username";
-import { Typography } from '@material-ui/core';
+import { Game } from "pages/Game";
+
 
 const App = () => {
   return (
     <div>
-      <Typography>Register</Typography>
-      <Username></Username>
-      <EmailPass></EmailPass>
+      <Game></Game>
     </div>
   );
 };
