@@ -11,7 +11,7 @@ import { Paper } from '@material-ui/core';
 ReactDOM.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <Paper>
+      <Paper style={{ "height": "100vh" }}>
         <App />
       </Paper>
     </ThemeProvider>
