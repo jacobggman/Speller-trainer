@@ -7,29 +7,28 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
+import { Typography, Paper, Grid } from "@material-ui/core";
 
 const App = () => {
   return (
-    <div>
-      <Router>
-        <div>
-          <Switch>
-            <Route exact path="/">
-              <Login />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <Route path="/game">
-              <Game />
-            </Route>
-          </Switch>
-        </div>
-      </Router>
-    </div>
+    <Router>
+      <Typography variant="h1" >SPELLER TRAINER</Typography>
+
+      <Switch>
+        <Route exact path="/">
+          <Login />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/register">
+          <Register />
+        </Route>
+        <Route path="/game">
+          <Game />
+        </Route>
+      </Switch>
+    </Router>
   );
 };
 

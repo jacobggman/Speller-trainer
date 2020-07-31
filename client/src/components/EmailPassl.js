@@ -11,15 +11,18 @@ const schema = yup.object({
     email: yup.string().email().required()
 });
 
-export const EmailPass = () => {
+export const EmailPass = ({
+    ...props
+}) => {
     return (
         <Formik
             validationSchema={schema}
             initialValues={{ username: "", email: "" }}
             onSubmit={() => { }}
+
         >
             {() => (
-                <Form>
+                <Form {...props}>
                     <div>
                         <Field label="Email" name="email" component={TextFormField} />
                     </div>
@@ -34,6 +37,6 @@ export const EmailPass = () => {
 
                 </Form>
             )}
-        </Formik>
+        </Formik >
     );
 };
