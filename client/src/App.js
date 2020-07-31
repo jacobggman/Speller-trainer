@@ -7,7 +7,7 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import { Typography, Paper, Grid } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 
 const App = () => {
   return (

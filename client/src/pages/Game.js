@@ -4,8 +4,8 @@ import { AppButton } from "components/AppButton";
 import { TopBar } from "components/TopBar";
 
 
-
 export const Game = () => {
+
     return (
         <div>
             <TopBar />
