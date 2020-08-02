@@ -22,9 +22,10 @@ export const TopBar = () => {
                 <Typography className={classes.TypographyStyle} variant="h6">
                     UserName
                 </Typography>
-                <Button color="inherit" >Logout</Button>
+                <Button variant="contained" color="secondary" >Logout</Button>
             </Toolbar>
         </AppBar>
 
     )
 }
+

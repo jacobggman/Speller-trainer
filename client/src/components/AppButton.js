@@ -8,6 +8,7 @@ export const AppButton = ({
 }) => {
     return (
         <Button
+
             variant="contained"
             color="primary"
             {...props}>
