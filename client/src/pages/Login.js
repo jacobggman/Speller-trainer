@@ -4,13 +4,30 @@ import { Link } from "react-router-dom";
 import { EmailPass } from "components/EmailPassl";
 import { AppButton } from "components/AppButton";
 
+import { makeStyles } from "@material-ui/styles";
+
+
+const useStyle = makeStyles(() => ({
+    mainGrid: {
+        minHeight: '100vh'
+    },
+}))
 
 export const Login = () => {
+    const classes = useStyle();
     const link = (<Link to="/register">here</Link>);
-    return (
-        <Grid >
 
-            <Typography variant="h2" >Login</Typography>
+    return (
+        <Grid
+            className={classes.mainGrid}
+            container
+            spacing={0}
+            direction="column"
+            alignItems="center"
+            justify="center">
+
+            <Typography variant="h3" >SPELLER TRAINER</Typography>
+            <Typography variant="h3" >login</Typography>
             <EmailPass></EmailPass>
 
             <AppButton>Login</AppButton>
