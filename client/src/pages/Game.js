@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField, Typography, Grid } from "@material-ui/core";
+import { TextField, Typography, Grid, Box } from "@material-ui/core";
 import { AppButton } from "components/AppButton";
 import { TopBar } from "components/TopBar";
 import InputBase from '@material-ui/core/InputBase';
@@ -35,11 +35,16 @@ export const Game = () => {
             <Grid
                 className={classes.mainGrid}
                 container
-                spacing={0}
                 direction="column"
+                justify="space-around"
                 alignItems="center"
-                justify="center"
             >
+                <Typography
+                    item
+                    variant="h2"
+                >VERY LONG WORD</Typography>
+
+
 
                 <InputBase
                     item

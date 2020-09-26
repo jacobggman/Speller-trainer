@@ -28,7 +28,7 @@ export const Login = () => {
 
             <Typography variant="h3" >SPELLER TRAINER</Typography>
             <Typography variant="h3" >login</Typography>
-            <EmailPass></EmailPass>
+            <EmailPass onSubmit={() => console.log("test")}></EmailPass>
 
             <AppButton>Login</AppButton>
             <div>

@@ -8,7 +8,8 @@ const schema = yup.object({
         .string()
         .required()
         .min(3),
-    email: yup.string().email().required()
+    email: yup.string().email().required(),
+
 });
 
 export const EmailPass = ({
@@ -18,7 +19,7 @@ export const EmailPass = ({
         <Formik
             validationSchema={schema}
             initialValues={{ username: "", email: "" }}
-            onSubmit={() => { }}
+            onSubmit={() => alert("hi")}
 
         >
             {() => (

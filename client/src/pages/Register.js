@@ -27,7 +27,8 @@ export const Register = () => {
             direction="column"
             alignItems="center"
             justify="center">
-            <Typography>Register</Typography>
+            <Typography variant="h3" >SPELLER TRAINER</Typography>
+            <Typography variant="h3" >Register</Typography>
             <Username></Username>
             <EmailPass></EmailPass>
 
