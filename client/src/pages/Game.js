@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Typography, Grid } from "@material-ui/core";
+import { Typography, Grid, Button } from "@material-ui/core";
 import { TopBar } from "components/TopBar";
 import InputBase from '@material-ui/core/InputBase';
 import { useHistory } from "react-router-dom";
@@ -29,12 +29,16 @@ const useStyle = makeStyles(() => ({
 export const Game = (token) => {
     const classes = useStyle();
     const history = useHistory();
-    const [word, setWord] = useState("");
+
 
     if (localStorage.getItem('x-auth-token') === null) {
         history.push("/login");
     }
     // rand
+    const tellWord = () => {
+        var msg = new SpeechSynthesisUtterance(word);
+        window.speechSynthesis.speak(msg);
+    }
 
     const getWord = () => {
         axios.get("api/words/rand", {
@@ -43,17 +47,17 @@ export const Game = (token) => {
             }
         }
         ).then((res) => {
-            const word = res.data;
-            var msg = new SpeechSynthesisUtterance(word);
-            window.speechSynthesis.speak(msg);
-            setWord(word);
+            return res.data;
+            setWord(res.data);
+            tellWord();
 
         }).catch((err) => {
             alert(err.response.data);
         })
     }
 
-
+    const [value, setValue] = React.useState()
+    const [word, setWord] = useState((getWord()));
 
     return (
         <div>
@@ -80,18 +84,28 @@ export const Game = (token) => {
                     autoComplete="off"
                     placeholder="Type here"
                     inputProps={{ 'aria-label': 'naked', 'textAlign': "center" }}
+                    value={value}
                     onKeyDown={event => {
                         if (event.key === 'Enter') {
+                            if (value === word) {
+                                alert("yay!")
+                            }
+                            else {
+                                alert(word)
+                                alert("OUF!")
+                            }
                             getWord();
                         }
                     }}
                 />
                 {/*<AppButton fullWidth >Submit</AppButton>*/}
+                <Button variant="contained" color="secondary" onClick={() => tellWord()}>Play sound</Button>
+
                 <Typography
                     item
                     variant="p"
                 >Type the word you hear and press enter</Typography>
-                <Speech text="search" />
+
 
             </Grid>
         </div>
