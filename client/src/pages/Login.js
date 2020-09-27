@@ -35,7 +35,7 @@ export const Login = () => {
 
             <Typography variant="h3" >SPELLER TRAINER</Typography>
             <Typography variant="h3" >{isLogin ? loginTitle : registerTitle}</Typography>
-            <EmailPass haveUsername={true}></EmailPass>
+            <EmailPass haveUsername={!isLogin}></EmailPass>
 
             <div>
                 <Typography >Don't have an account? Click {link} to {isLogin ? registerTitle : loginTitle}.</Typography>
