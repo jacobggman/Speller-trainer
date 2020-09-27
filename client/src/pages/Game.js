@@ -1,13 +1,11 @@
-import React from "react";
-import { TextField, Typography, Grid, Box } from "@material-ui/core";
-import { AppButton } from "components/AppButton";
+import React, { useState } from "react";
+import { Typography, Grid } from "@material-ui/core";
 import { TopBar } from "components/TopBar";
 import InputBase from '@material-ui/core/InputBase';
 import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
 import axios from 'axios';
 import Speech from 'react-speech';
-import { TextToSpeech } from "text-to-speech-js"
 
 const useStyle = makeStyles(() => ({
     wordField: {
@@ -31,6 +29,7 @@ const useStyle = makeStyles(() => ({
 export const Game = (token) => {
     const classes = useStyle();
     const history = useHistory();
+    const [word, setWord] = useState("");
 
     if (localStorage.getItem('x-auth-token') === null) {
         history.push("/login");
@@ -47,6 +46,7 @@ export const Game = (token) => {
             const word = res.data;
             var msg = new SpeechSynthesisUtterance(word);
             window.speechSynthesis.speak(msg);
+            setWord(word);
 
         }).catch((err) => {
             alert(err.response.data);
