@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Typography, Grid } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import { EmailPass } from "components/EmailPassl";
@@ -14,7 +14,15 @@ const useStyle = makeStyles(() => ({
 
 export const Login = () => {
     const classes = useStyle();
-    const link = (<Link to="/register">here</Link>);
+    const loginTitle = "Login";
+    const registerTitle = "Register";
+    const [isLogin, setPage] = useState("Register");
+
+    const switchPage = () => {
+        setPage(!isLogin);
+    }
+
+    const link = (<Link onClick={() => switchPage()}>here</Link>);
 
     return (
         <Grid
@@ -26,11 +34,11 @@ export const Login = () => {
             justify="center">
 
             <Typography variant="h3" >SPELLER TRAINER</Typography>
-            <Typography variant="h3" >login</Typography>
+            <Typography variant="h3" >{isLogin ? loginTitle : registerTitle}</Typography>
             <EmailPass haveUsername={true}></EmailPass>
 
             <div>
-                <Typography >Don't have an account? Click {link} to register.</Typography>
+                <Typography >Don't have an account? Click {link} to {isLogin ? registerTitle : loginTitle}.</Typography>
             </div>
         </Grid>
     );
