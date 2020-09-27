@@ -3,13 +3,23 @@ import * as yup from "yup";
 import React from "react";
 import { TextFormField } from "components/TextField";
 import { AppButton } from "./AppButton";
-import { Grid } from "@material-ui/core";
+import { Checkbox, Grid, Typography } from "@material-ui/core";
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
 
+
+// words:
+// route it
+// get it
+// taking and button
+// correct
 
 export const EmailPass = ({
     haveUsername, ...props
 }) => {
+
+    const history = useHistory();
+
 
     const schema = yup.object({
 
@@ -39,10 +49,11 @@ export const EmailPass = ({
             method: 'POST',
             data: values
         }).then((response) => {
-            alert(JSON.stringify(response, null, 2));
-        }).catch((err) => {
-            alert(JSON.stringify(err, null, 2));
-            alert(err.message);
+            const token = response.data;
+            localStorage.setItem('x-auth-token', token);
+            history.push("/game");
+        }).catch((err, req) => {
+            alert(err.response.data);
         });;
         //alert(JSON.stringify(values, null, 2))
     }
@@ -87,10 +98,18 @@ export const EmailPass = ({
                             />
                         </div>
                         <div>
-                            <AppButton type="submit" >
-                                Submit
-                        </AppButton>
+
+                            <Grid
+                                container
+                                direction="row"
+                                justify="space-between"
+                                alignItems="center"
+                            >
+                            </Grid>
                         </div>
+                        <AppButton type="submit" >
+                            Submit
+                        </AppButton>
                     </Grid>
                 </Form>
             )

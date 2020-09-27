@@ -3,9 +3,11 @@ import { TextField, Typography, Grid, Box } from "@material-ui/core";
 import { AppButton } from "components/AppButton";
 import { TopBar } from "components/TopBar";
 import InputBase from '@material-ui/core/InputBase';
-
+import { useHistory } from "react-router-dom";
 import { makeStyles } from "@material-ui/styles";
-
+import axios from 'axios';
+import Speech from 'react-speech';
+import { TextToSpeech } from "text-to-speech-js"
 
 const useStyle = makeStyles(() => ({
     wordField: {
@@ -26,11 +28,36 @@ const useStyle = makeStyles(() => ({
 }))
 
 
-export const Game = () => {
+export const Game = (token) => {
     const classes = useStyle();
+    const history = useHistory();
+
+    if (localStorage.getItem('x-auth-token') === null) {
+        history.push("/login");
+    }
+    // rand
+
+    const getWord = () => {
+        axios.get("api/words/rand", {
+            headers: {
+                'auth-token': localStorage.getItem('x-auth-token')
+            }
+        }
+        ).then((res) => {
+            const word = res.data;
+            var msg = new SpeechSynthesisUtterance(word);
+            window.speechSynthesis.speak(msg);
+
+        }).catch((err) => {
+            alert(err.response.data);
+        })
+    }
+
+
 
     return (
         <div>
+
             <TopBar />
             <Grid
                 className={classes.mainGrid}
@@ -55,7 +82,7 @@ export const Game = () => {
                     inputProps={{ 'aria-label': 'naked', 'textAlign': "center" }}
                     onKeyDown={event => {
                         if (event.key === 'Enter') {
-                            alert('{do validate}')
+                            getWord();
                         }
                     }}
                 />
@@ -64,6 +91,8 @@ export const Game = () => {
                     item
                     variant="p"
                 >Type the word you hear and press enter</Typography>
+                <Speech text="search" />
+
             </Grid>
         </div>
     );

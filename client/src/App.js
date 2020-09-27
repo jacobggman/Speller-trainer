@@ -6,9 +6,10 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import { Typography } from "@material-ui/core";
 
 const App = () => {
+
+
   return (
     <Router>
       {/*<Typography variant="h1" >SPELLER TRAINER</Typography>*/}
