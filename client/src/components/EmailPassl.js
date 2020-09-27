@@ -4,7 +4,7 @@ import React from "react";
 import { TextFormField } from "components/TextField";
 import { AppButton } from "./AppButton";
 import { Grid } from "@material-ui/core";
-
+import axios from 'axios';
 
 
 export const EmailPass = ({
@@ -25,11 +25,33 @@ export const EmailPass = ({
 
     });
 
+    const sendUserData = (values) => {
+        const path = `/api/user/${haveUsername ? 'register' : 'login'}`;
+        if (haveUsername) {
+            values.name = values.username;
+        }
+        else {
+            delete values.name;
+        }
+        delete values.username;
+        axios({
+            url: path,
+            method: 'POST',
+            data: values
+        }).then((response) => {
+            alert(JSON.stringify(response, null, 2));
+        }).catch((err) => {
+            alert(JSON.stringify(err, null, 2));
+            alert(err.message);
+        });;
+        //alert(JSON.stringify(values, null, 2))
+    }
+
     return (
         <Formik
             validationSchema={schema}
             initialValues={{ username: "", email: "" }}
-            onSubmit={(values, { setSubmitting }) => alert(JSON.stringify(values, null, 2))}
+            onSubmit={(values, { setSubmitting }) => sendUserData(values)}
         >
             {() => (
                 <Form {...props}>
