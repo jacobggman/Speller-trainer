@@ -5,18 +5,26 @@ import { TextFormField } from "components/TextField";
 import { AppButton } from "./AppButton";
 import { Grid } from "@material-ui/core";
 
-const schema = yup.object({
-    password: yup
-        .string()
-        .required()
-        .min(3),
-    email: yup.string().email().required(),
 
-});
 
 export const EmailPass = ({
     haveUsername, ...props
 }) => {
+
+    const schema = yup.object({
+
+        password: yup
+            .string()
+            .required()
+            .matches(
+                /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+                "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+            ),
+        email: yup.string().email().required(),
+        username: haveUsername ? yup.string().required().min(3) : yup.string(),
+
+    });
+
     return (
         <Formik
             validationSchema={schema}
@@ -36,7 +44,7 @@ export const EmailPass = ({
                                 haveUsername ?
                                     <Field
                                         label="Username"
-                                        name="Username"
+                                        name="username"
                                         type="Username"
                                         component={TextFormField}
                                     />
