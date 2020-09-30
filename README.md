@@ -1,2 +1,1 @@
-# Speller-trainer
-React and Node app that improves your spelling errors
+your_new_file_content
