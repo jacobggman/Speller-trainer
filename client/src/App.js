@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Game from "pages/Game";
 import { Login } from "pages/Login";
 import {
@@ -9,6 +9,7 @@ import {
 
 const App = () => {
 
+  const [username, setUserName] = useState("UserName");
 
   return (
     <Router>
@@ -16,13 +17,13 @@ const App = () => {
 
       <Switch>
         <Route exact path="/">
-          <Login />
+          <Login setUserName={setUserName} />
         </Route>
         <Route path="/login">
-          <Login />
+          <Login setUserName={setUserName} />
         </Route>
         <Route path="/game">
-          <Game />
+          <Game name="Test" />
         </Route>
       </Switch>
     </Router>

@@ -26,14 +26,16 @@ const useStyle = () => {
     }))
 }
 
-// get definition https://api.dictionaryapi.dev/api/v2/entries/en/i
 // get username
 
 class Game extends React.Component {
     constructor() {
         super();
-        this.state = { word: "", inputText: "", showWord: "", rightChars: undefined };
+        this.state = { word: "", inputText: "", showWord: "", rightChars: undefined, lastDefinition: { word: "", definition: "" } };
         this.classes = useStyle();
+        this.options = {
+            headers: { 'auth-token': localStorage.getItem('x-auth-token') }
+        };
     }
 
     async componentDidMount() {
@@ -44,11 +46,7 @@ class Game extends React.Component {
     }
 
     async getWord() {
-        const newWord = await axios.get("api/words/rand", {
-            headers: {
-                'auth-token': localStorage.getItem('x-auth-token')
-            }
-        });
+        const newWord = await axios.get("api/words/rand", this.options);
 
         this.setState({
             word: newWord.data
@@ -57,12 +55,22 @@ class Game extends React.Component {
 
     showRightWord(rightWord, answered) {
         var chars = [];
+        var haveRed = false;
+
         if (answered === undefined || rightWord === undefined) return;
         for (let index = 0; index < rightWord.length; index++) {
             const realChar = rightWord[index];
             const answeredChar = answered[index];
             const isRedColor = answeredChar == null || answeredChar != realChar;
+            if (isRedColor) {
+                haveRed = true;
+            }
             chars.push(<text style={{ fontSize: "100px", color: isRedColor ? 'red' : "green" }}>{realChar}</text>)
+
+        }
+
+        if (!haveRed && answered.length != rightWord.length) {
+            chars.push(<text style={{ fontSize: "100px", color: 'red' }}>...</text>)
         }
 
         this.setState(
@@ -77,15 +85,36 @@ class Game extends React.Component {
         window.speechSynthesis.speak(msg);
     }
 
+    tellDefinition() {
+        const lastD = this.state.lastDefinition;
+        if (lastD.word === this.state.word) {
+            var msg = new SpeechSynthesisUtterance(lastD.definition);
+            window.speechSynthesis.speak(msg);
+            return
+        }
+        const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${this.state.word}`;
+        axios.get(url).then(res => {
+            try {
+                const definition = (res.data[0].meanings[0].definitions[0].definition);
+                this.setState({ lastDefinition: { word: this.state.word, definition: definition } });
+                var msg = new SpeechSynthesisUtterance(definition);
+                window.speechSynthesis.speak(msg);
+            } catch (error) {
+                alert("Can't find definition");
+            }
+
+        })
+
+    }
+
     onAnswer() {
         this.showRightWord(this.state.word, this.state.inputText);
-        if (this.state.inputText === this.state.word) {
-            alert("yay!")
-        }
-        else {
-            alert(this.state.word)
-            alert("OUF!")
-        }
+        axios.post("/api/words/answer", {
+            isRight: this.state.inputText === this.state.word
+        }, this.options).catch((e) => {
+            alert(e)
+        })
+
         this.setState({ inputText: "" });
         this.getWord().then(() => {
             this.tellWord();
@@ -95,8 +124,7 @@ class Game extends React.Component {
     render() {
         const { classes } = this.props;
         return (<div>
-
-            <TopBar />
+            <TopBar name={this.props.name} />
             <Grid
                 className={classes.mainGrid}
                 container
@@ -122,7 +150,8 @@ class Game extends React.Component {
                     }}
                 />
                 {}
-                <Button variant="contained" color="secondary" onClick={() => this.tellWord()}>Play sound</Button>
+                <Button variant="contained" color="secondary" onClick={() => this.tellWord()}>Tell word</Button>
+                <Button variant="contained" color="secondary" onClick={() => this.tellDefinition()}>Tell definition</Button>
 
                 <Typography
                     item

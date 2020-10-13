@@ -159,10 +159,10 @@ router.post('/answer', validation, async (req, res) => {
         function (err, result) {
 
             if (err) {
-                res.send(err)
+                res.send({ isOk: false })
             }
             else {
-                res.send(result);
+                res.send({ isOk: true })
             }
 
         })

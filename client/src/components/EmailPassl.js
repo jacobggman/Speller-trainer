@@ -49,8 +49,9 @@ export const EmailPass = ({
             method: 'POST',
             data: values
         }).then((response) => {
-            const token = response.data;
+            const token = response.data.token;
             localStorage.setItem('x-auth-token', token);
+            props.setUserName(response.data.username);
             history.push("/game");
         }).catch((err, req) => {
             alert(err.response.data);

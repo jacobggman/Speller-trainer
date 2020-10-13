@@ -12,11 +12,12 @@ const useStyle = makeStyles(() => ({
 }))
 
 
-export const Login = () => {
+export const Login = (props) => {
     const classes = useStyle();
     const loginTitle = "Login";
     const registerTitle = "Register";
     const [isLogin, setPage] = useState("Register");
+
 
     const switchPage = () => {
         setPage(!isLogin);
@@ -35,7 +36,8 @@ export const Login = () => {
 
             <Typography variant="h3" >SPELLER TRAINER</Typography>
             <Typography variant="h3" >{isLogin ? loginTitle : registerTitle}</Typography>
-            <EmailPass haveUsername={!isLogin}></EmailPass>
+
+            <EmailPass haveUsername={!isLogin} setUserName={props.setUserName}></EmailPass>
 
             <div>
                 <Typography >Don't have an account? Click {link} to {isLogin ? registerTitle : loginTitle}.</Typography>

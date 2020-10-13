@@ -14,7 +14,7 @@ const useStyle = makeStyles(() => ({
 }))
 
 
-export const TopBar = () => {
+export const TopBar = (props) => {
     const classes = useStyle();
     const history = useHistory();
 
@@ -22,7 +22,7 @@ export const TopBar = () => {
         <AppBar position="static">
             <Toolbar>
                 <Typography className={classes.TypographyStyle} variant="h6" >
-                    UserName
+                    {props.name}
                 </Typography>
                 <Button variant="contained" color="secondary" onClick={() => {
                     localStorage.removeItem('x-auth-token');
