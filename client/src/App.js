@@ -25,6 +25,9 @@ const App = () => {
         <Route path="/game">
           <Game name={username} />
         </Route>
+        <Route >
+          <Login setUserName={setUserName} />
+        </Route>
       </Switch>
     </Router>
   );
