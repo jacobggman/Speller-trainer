@@ -36,12 +36,15 @@ class Game extends React.Component {
         this.options = {
             headers: { 'auth-token': localStorage.getItem('x-auth-token') }
         };
+
     }
 
     async componentDidMount() {
         this.getWord().then(() => {
             this.tellWord();
         })
+
+        this.setState({ username: (await axios.get("api/user/username", this.options)).data })
 
     }
 
@@ -124,14 +127,14 @@ class Game extends React.Component {
     render() {
         const { classes } = this.props;
         return (<div>
-            <TopBar name={this.props.name} />
+            <TopBar name={this.state.username} />
             <Grid
-                className={classes.mainGrid}
                 container
                 direction="column"
-                justify="space-around"
+                justify="center"
                 alignItems="center"
             >
+
                 {this.state.rightChars}
 
                 <InputBase
@@ -149,7 +152,7 @@ class Game extends React.Component {
                         }
                     }}
                 />
-                {}
+
                 <Button variant="contained" color="secondary" onClick={() => this.tellWord()}>Tell word</Button>
                 <Button variant="contained" color="secondary" onClick={() => this.tellDefinition()}>Tell definition</Button>
 
