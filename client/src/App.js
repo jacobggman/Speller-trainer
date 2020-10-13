@@ -23,7 +23,7 @@ const App = () => {
           <Login setUserName={setUserName} />
         </Route>
         <Route path="/game">
-          <Game name="Test" />
+          <Game name={username} />
         </Route>
       </Switch>
     </Router>
