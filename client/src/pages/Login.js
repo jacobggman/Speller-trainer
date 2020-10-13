@@ -36,6 +36,7 @@ export const Login = (props) => {
             justify="center">
 
             <Typography variant="h3" color="secondary" >SPELLER TRAINER</Typography>
+            <Typography variant="p" >React and Node app that improves your spelling errors by using text to speech and algorithm that ask the best words for each user</Typography>
             <Typography variant="h3" >{isLogin ? loginTitle : registerTitle}</Typography>
 
             <EmailPass haveUsername={!isLogin} setUserName={props.setUserName}></EmailPass>
