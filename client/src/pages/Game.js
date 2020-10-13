@@ -89,15 +89,13 @@ class Game extends React.Component {
     }
 
     tellWord() {
-        var msg = new SpeechSynthesisUtterance(this.state.word);
-        window.speechSynthesis.speak(msg);
+        speechSynthesis.speak(new SpeechSynthesisUtterance(this.state.word));
     }
 
     tellDefinition() {
         const lastD = this.state.lastDefinition;
         if (lastD.word === this.state.word) {
-            var msg = new SpeechSynthesisUtterance(lastD.definition);
-            window.speechSynthesis.speak(msg);
+            speechSynthesis.speak(new SpeechSynthesisUtterance(lastD.definition));
             return
         }
         const url = `https://api.dictionaryapi.dev/api/v2/entries/en/${this.state.word}`;
@@ -105,8 +103,7 @@ class Game extends React.Component {
             try {
                 const definition = (res.data[0].meanings[0].definitions[0].definition);
                 this.setState({ lastDefinition: { word: this.state.word, definition: definition } });
-                var msg = new SpeechSynthesisUtterance(definition);
-                window.speechSynthesis.speak(msg);
+                speechSynthesis.speak(new SpeechSynthesisUtterance(definition));
             } catch (error) {
                 alert("Can't find definition");
             }
