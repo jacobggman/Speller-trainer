@@ -1,66 +1,100 @@
-import React, { useState } from "react";
+import React, { useState, Text } from "react";
 import { Typography, Grid, Button } from "@material-ui/core";
 import { TopBar } from "components/TopBar";
 import InputBase from '@material-ui/core/InputBase';
 import { useHistory } from "react-router-dom";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles, withStyles } from "@material-ui/styles";
 import axios from 'axios';
-import Speech from 'react-speech';
 
-const useStyle = makeStyles(() => ({
-    wordField: {
-        width: "auto",
-        fontSize: 100,
-        textAlign: "center",
+const useStyle = () => {
+    return makeStyles(() => ({
+        wordField: {
+            width: "auto",
+            fontSize: 100,
+            textAlign: "center",
 
-        textAlign: "center",
-        align: "center",
-        '& input': {
-            textAlign: "center"
-        }
+            textAlign: "center",
+            align: "center",
+            '& input': {
+                textAlign: "center"
+            }
 
-    },
-    mainGrid: {
-        minHeight: '80vh'
-    },
-}))
+        },
+        mainGrid: {
+            minHeight: '80vh'
+        },
+    }))
+}
 
+// get definition https://api.dictionaryapi.dev/api/v2/entries/en/i
+// get username
 
-export const Game = (token) => {
-    const classes = useStyle();
-    const history = useHistory();
-
-
-    if (localStorage.getItem('x-auth-token') === null) {
-        history.push("/login");
-    }
-    // rand
-    const tellWord = () => {
-        var msg = new SpeechSynthesisUtterance(word);
-        window.speechSynthesis.speak(msg);
+class Game extends React.Component {
+    constructor() {
+        super();
+        this.state = { word: "", inputText: "", showWord: "", rightChars: undefined };
+        this.classes = useStyle();
     }
 
-    const getWord = () => {
-        axios.get("api/words/rand", {
+    async componentDidMount() {
+        this.getWord().then(() => {
+            this.tellWord();
+        })
+
+    }
+
+    async getWord() {
+        const newWord = await axios.get("api/words/rand", {
             headers: {
                 'auth-token': localStorage.getItem('x-auth-token')
             }
-        }
-        ).then((res) => {
-            return res.data;
-            setWord(res.data);
-            tellWord();
+        });
 
-        }).catch((err) => {
-            alert(err.response.data);
+        this.setState({
+            word: newWord.data
         })
     }
 
-    const [value, setValue] = React.useState()
-    const [word, setWord] = useState((getWord()));
+    showRightWord(rightWord, answered) {
+        var chars = [];
+        if (answered === undefined || rightWord === undefined) return;
+        for (let index = 0; index < rightWord.length; index++) {
+            const realChar = rightWord[index];
+            const answeredChar = answered[index];
+            const isRedColor = answeredChar == null || answeredChar != realChar;
+            chars.push(<text style={{ fontSize: "100px", color: isRedColor ? 'red' : "green" }}>{realChar}</text>)
+        }
 
-    return (
-        <div>
+        this.setState(
+            {
+                rightChars: (<body>{chars}</body>)
+            }
+        )
+    }
+
+    tellWord() {
+        var msg = new SpeechSynthesisUtterance(this.state.word);
+        window.speechSynthesis.speak(msg);
+    }
+
+    onAnswer() {
+        this.showRightWord(this.state.word, this.state.inputText);
+        if (this.state.inputText === this.state.word) {
+            alert("yay!")
+        }
+        else {
+            alert(this.state.word)
+            alert("OUF!")
+        }
+        this.setState({ inputText: "" });
+        this.getWord().then(() => {
+            this.tellWord();
+        });
+    }
+
+    render() {
+        const { classes } = this.props;
+        return (<div>
 
             <TopBar />
             <Grid
@@ -70,12 +104,7 @@ export const Game = (token) => {
                 justify="space-around"
                 alignItems="center"
             >
-                <Typography
-                    item
-                    variant="h2"
-                >VERY LONG WORD</Typography>
-
-
+                {this.state.rightChars}
 
                 <InputBase
                     item
@@ -84,22 +113,16 @@ export const Game = (token) => {
                     autoComplete="off"
                     placeholder="Type here"
                     inputProps={{ 'aria-label': 'naked', 'textAlign': "center" }}
-                    value={value}
+                    value={this.state.inputText}
+                    onChange={(e) => { this.setState({ inputText: e.target.value }) }}
                     onKeyDown={event => {
                         if (event.key === 'Enter') {
-                            if (value === word) {
-                                alert("yay!")
-                            }
-                            else {
-                                alert(word)
-                                alert("OUF!")
-                            }
-                            getWord();
+                            this.onAnswer();
                         }
                     }}
                 />
-                {/*<AppButton fullWidth >Submit</AppButton>*/}
-                <Button variant="contained" color="secondary" onClick={() => tellWord()}>Play sound</Button>
+                {}
+                <Button variant="contained" color="secondary" onClick={() => this.tellWord()}>Play sound</Button>
 
                 <Typography
                     item
@@ -108,6 +131,9 @@ export const Game = (token) => {
 
 
             </Grid>
-        </div>
-    );
-};
+        </div >
+        );
+    }
+}
+
+export default withStyles(useStyle)(Game);

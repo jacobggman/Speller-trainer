@@ -1,5 +1,5 @@
 import React from "react";
-import { Game } from "pages/Game";
+import Game from "pages/Game";
 import { Login } from "pages/Login";
 import {
   BrowserRouter as Router,
