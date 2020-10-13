@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { Typography, Grid } from '@material-ui/core';
+import { Button, Typography, Grid } from '@material-ui/core';
 import { Link } from "react-router-dom";
 import { EmailPass } from "components/EmailPassl";
 import { makeStyles } from "@material-ui/styles";
+import { AppButton } from "components/AppButton";
 
 
 const useStyle = makeStyles(() => ({
@@ -23,7 +24,7 @@ export const Login = (props) => {
         setPage(!isLogin);
     }
 
-    const link = (<Link onClick={() => switchPage()}>here</Link>);
+    const link = (<AppButton size="small" onClick={() => switchPage()}>here</AppButton >);
 
     return (
         <Grid
@@ -40,7 +41,7 @@ export const Login = (props) => {
             <EmailPass haveUsername={!isLogin} setUserName={props.setUserName}></EmailPass>
 
             <div>
-                <Typography >Don't have an account? Click {link} to {isLogin ? registerTitle : loginTitle}.</Typography>
+                <Typography>Don't have an account? Click {link} to {isLogin ? registerTitle : loginTitle}.</Typography>
             </div>
         </Grid>
     );
