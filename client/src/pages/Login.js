@@ -34,7 +34,7 @@ export const Login = (props) => {
             alignItems="center"
             justify="center">
 
-            <Typography variant="h3" >SPELLER TRAINER</Typography>
+            <Typography variant="h3" color="secondary" >SPELLER TRAINER</Typography>
             <Typography variant="h3" >{isLogin ? loginTitle : registerTitle}</Typography>
 
             <EmailPass haveUsername={!isLogin} setUserName={props.setUserName}></EmailPass>

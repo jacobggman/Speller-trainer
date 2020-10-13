@@ -38,7 +38,6 @@ function getRandomIndex(user) {
         }
     }
 
-    console.log('ask unknon word');
     return genRandomIndex(
         user.knowWords,
         user.BiggestKnowWord + 1,

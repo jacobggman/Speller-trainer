@@ -8,6 +8,11 @@ import axios from 'axios';
 
 const useStyle = () => {
     return makeStyles(() => ({
+        root: {
+            flexGrow: 1,
+        },
+
+
         wordField: {
             width: "auto",
             fontSize: 100,
@@ -126,44 +131,44 @@ class Game extends React.Component {
 
     render() {
         const { classes } = this.props;
-        return (<div>
-            <TopBar name={this.state.username} />
-            <Grid
-                container
-                direction="column"
-                justify="center"
-                alignItems="center"
-            >
+        return (
+            <div>
+                <TopBar name={this.state.username} />
+                <Grid
+                    container
+                    direction="column"
+                    alignItems="center"
+                >
 
-                {this.state.rightChars}
+                    {this.state.rightChars}
 
-                <InputBase
-                    item
-                    className={classes.wordField}
-                    autoFocus
-                    autoComplete="off"
-                    placeholder="Type here"
-                    inputProps={{ 'aria-label': 'naked', 'textAlign': "center" }}
-                    value={this.state.inputText}
-                    onChange={(e) => { this.setState({ inputText: e.target.value }) }}
-                    onKeyDown={event => {
-                        if (event.key === 'Enter') {
-                            this.onAnswer();
-                        }
-                    }}
-                />
+                    <InputBase
+                        item
+                        className={classes.wordField}
+                        autoFocus
+                        autoComplete="off"
+                        placeholder="Type here"
+                        inputProps={{ 'aria-label': 'naked', 'textAlign': "center" }}
+                        value={this.state.inputText}
+                        onChange={(e) => { this.setState({ inputText: e.target.value }) }}
+                        onKeyDown={event => {
+                            if (event.key === 'Enter') {
+                                this.onAnswer();
+                            }
+                        }}
+                    />
 
-                <Button variant="contained" color="secondary" onClick={() => this.tellWord()}>Tell word</Button>
-                <Button variant="contained" color="secondary" onClick={() => this.tellDefinition()}>Tell definition</Button>
+                    <Button variant="contained" color="secondary" onClick={() => this.tellWord()}>Tell word</Button>
+                    <Button variant="contained" color="secondary" onClick={() => this.tellDefinition()}>Tell definition</Button>
 
-                <Typography
-                    item
-                    variant="p"
-                >Type the word you hear and press enter</Typography>
+                    <Typography
+                        item
+                        variant="p"
+                    >Type the word you hear and press enter</Typography>
 
 
-            </Grid>
-        </div >
+                </Grid>
+            </div >
         );
     }
 }
